@@ -5,11 +5,12 @@
 #----------------------------------- #
 FROM tomcat:9.0.71-jre11-temurin-focal as builder
 
-ARG JAVA_HOME=/usr/local/openjdk-11
+
+ARG JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
-    cmake build-essential wget ca-certificates unzip pkg-config \
+    openjdk-11-jdk cmake build-essential wget ca-certificates unzip pkg-config \
     zlib1g-dev libfreexl-dev libxml2-dev nasm libpng-dev
 
 WORKDIR /tmp
@@ -145,7 +146,7 @@ RUN tar -xzf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_SHORT_VERSION} && \
     --with-webp=/usr/local \
     --with-zstd=/usr/local \
     --with-libdeflate \
-    --with-java \
+    --with-java=/usr/lib/jvm/java-11-openjdk-amd64 \
     && echo "building GDAL ${GDAL_VERSION}..." \
     && make -j${CPUS} && make --quiet install
 
