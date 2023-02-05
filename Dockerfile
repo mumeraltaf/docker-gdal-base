@@ -3,7 +3,9 @@
 # github: perrygeo/docker-gdal-base
 # docker: perrygeo/gdal-base
 #----------------------------------- #
-FROM python:3.8-slim-buster as builder
+FROM tomcat:9.0.71-jre11-temurin-focal as builder
+
+ARG JAVA_HOME=/usr/local/openjdk-11
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
@@ -143,10 +145,18 @@ RUN tar -xzf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_SHORT_VERSION} && \
     --with-webp=/usr/local \
     --with-zstd=/usr/local \
     --with-libdeflate \
+    --with-java=$JAVA_HOME \
     && echo "building GDAL ${GDAL_VERSION}..." \
     && make -j${CPUS} && make --quiet install
 
+
 RUN ldconfig
+
+
+RUN gdalinfo --version
+
+
+RUN apt list libgdal-java
 
 # https://proj.org/usage/environmentvars.html#envvar-PROJ_NETWORK
 ENV PROJ_NETWORK ON
