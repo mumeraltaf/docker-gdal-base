@@ -16,4 +16,4 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build Docker Image
         run: |
-          sudo docker build -t umeraltaf/gdal.
+          sudo docker build -t umeraltaf/gdal .
