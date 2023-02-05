@@ -145,7 +145,7 @@ RUN tar -xzf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_SHORT_VERSION} && \
     --with-webp=/usr/local \
     --with-zstd=/usr/local \
     --with-libdeflate \
-    --with-java=$JAVA_HOME \
+    --with-java \
     && echo "building GDAL ${GDAL_VERSION}..." \
     && make -j${CPUS} && make --quiet install
 
